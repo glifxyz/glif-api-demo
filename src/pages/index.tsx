@@ -6,9 +6,27 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const runGlif = async () => {
-    const res = await fetch("/api/glif");
-    const data = await res.json();
-    console.log({ data });
+    // TODO get some cool data from the user
+    const data = {
+      id: "clfpg16y90001l908jfomwu9k",
+      input: "black and white gothic horror",
+    };
+
+    // TODO set loading indicators
+    // this can take 30-60s depending on the glif!
+
+    const res = await fetch("/api/glif", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const output = await res.json();
+
+    // TODO do something cool with the output
+    console.log({ output });
+    alert(output?.output);
     return data;
   };
 
@@ -25,6 +43,12 @@ export default function Home() {
             Oreos: great cookie or greatest cookie?
           </p>
         </div>
+        <button
+          className="py-2 px-3 bg-white text-black border border-black"
+          onClick={runGlif}
+        >
+          Run Glif
+        </button>
       </div>
     </main>
   );
