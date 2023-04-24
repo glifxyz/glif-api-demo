@@ -63,7 +63,7 @@ export default function Home() {
       </div>
       <div className="w-full text-2xl">
         {output}
-        {/* {output && <img src={output?.outputs[0]} />} */}
+        {output && <img src={output.output} />}
       </div>
     </main>
   );
