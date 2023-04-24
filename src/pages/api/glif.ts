@@ -18,7 +18,7 @@ export default async function handler(
     return res.status(400).json({ error: "missing id param", id, input });
   }
 
-  const data = { id, input };
+  const data = { id, input, inputs: [input] };
   const url = `${process.env.GLIF_API_URL}/api/graph-run`;
   console.log("/api/glif", { url, data });
   const response = await fetch(url, {
@@ -29,8 +29,17 @@ export default async function handler(
     },
     body: JSON.stringify(data),
   });
-  const output = await response.json();
-  console.log("/api/glif", { output });
 
-  res.status(200).json({ id, input, output });
+  // {"started": "started"}
+  // {"status": "running" }
+  // {"output": "https://example.com/image.jpg"}
+
+  const rawOutput = await response.text();
+  const outputs = rawOutput.split("\n").filter((output) => {
+    return output !== "";
+  });
+  const lastOutput = outputs[outputs.length - 1];
+  console.log({ lastOutput });
+
+  res.status(200).json({ id, input, output: lastOutput });
 }

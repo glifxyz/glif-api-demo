@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Inter } from "next/font/google";
@@ -5,11 +6,16 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [output, setOutput] = useState(null);
+
   const runGlif = async () => {
+    setIsLoading(true);
+
     // TODO get some cool data from the user
     const data = {
-      id: "clfpg16y90001l908jfomwu9k",
-      input: "black and white gothic horror",
+      id: "clgu1mc6h0008jq08altzl4ih",
+      input: "alligator crocodile snakeskin leather",
     };
 
     // TODO set loading indicators
@@ -22,11 +28,15 @@ export default function Home() {
       },
       body: JSON.stringify(data),
     });
-    const output = await res.json();
+    const json = await res.json();
 
     // TODO do something cool with the output
     console.log({ output });
-    alert(output?.output);
+    // alert(output?.output);
+    setOutput(json?.output);
+
+    setIsLoading(false);
+
     return data;
   };
 
@@ -46,9 +56,14 @@ export default function Home() {
         <button
           className="py-2 px-3 bg-white text-black border border-black hover:bg-gray-100"
           onClick={runGlif}
+          disabled={isLoading}
         >
-          Run Glif
+          {(isLoading && <h1>Loading...</h1>) || "Run Glif"}
         </button>
+      </div>
+      <div className="w-full text-2xl">
+        {output}
+        {/* {output && <img src={output?.outputs[0]} />} */}
       </div>
     </main>
   );
