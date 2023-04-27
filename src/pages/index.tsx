@@ -32,7 +32,6 @@ export default function Home() {
 
     // TODO do something cool with the output
     console.log({ output });
-    // alert(output?.output);
     setOutput(json?.output);
 
     setIsLoading(false);
