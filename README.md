@@ -1,3 +1,5 @@
+> :warning: this repository is now out-of-date! For more up-to-date info please visit https://glif.app/api
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
